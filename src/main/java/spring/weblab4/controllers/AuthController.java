@@ -28,6 +28,10 @@ public class AuthController {
         return "login";
     }
 
+    @PostMapping("/process_login")
+    public String processLogin(){
+        return "redirect:";
+    }
     @GetMapping("/registration")
     public String registrationPage(@ModelAttribute("user") User user){
         return "registration";

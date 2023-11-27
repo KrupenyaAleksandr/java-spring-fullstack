@@ -25,7 +25,7 @@ public class User {
     private String password;
 
     //@NotEmpty(message = "Введите почту")
-    //@Size(min = 8, max = 32, message = "Некорректный email")
+    //@Size(min = 8, max = 64, message = "Некорректный email")
     @Column(name = "email")
     private String email;
 
