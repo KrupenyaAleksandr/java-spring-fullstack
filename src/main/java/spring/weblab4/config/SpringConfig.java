@@ -36,13 +36,16 @@ public class SpringConfig{
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(request ->
-                        request.requestMatchers(endpoints_whitelist).permitAll()
+                        request
+                                .requestMatchers("/admin/**")
+                                .hasRole("ADMIN")
+                                .requestMatchers(endpoints_whitelist).permitAll()
                                 .anyRequest().authenticated())
                 .formLogin(form -> form
                         .loginPage("/login")
                         .loginProcessingUrl("/process_login")
-                        .successForwardUrl("/home")
-                        .failureForwardUrl("/login?error")
+                        .defaultSuccessUrl("/")
+                        .failureUrl("/login?error")
                         .permitAll()
                 );
         return http.build();

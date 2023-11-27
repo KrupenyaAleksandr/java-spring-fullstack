@@ -28,10 +28,6 @@ public class AuthController {
         return "login";
     }
 
-    @PostMapping("/process_login")
-    public String processLogin(){
-        return "redirect:";
-    }
     @GetMapping("/registration")
     public String registrationPage(@ModelAttribute("user") User user){
         return "registration";
@@ -46,12 +42,15 @@ public class AuthController {
 
         userValidator.validate(user, bindingResult);
         if (bindingResult.hasErrors()) {
-            System.out.println("Bad");
             return "registration";
         }
 
-        System.out.println("Success");
         registrationService.register(user);
         return "redirect:/login";
+    }
+
+    @PostMapping("/process_login")
+    public void process(){
+        System.out.println();
     }
 }

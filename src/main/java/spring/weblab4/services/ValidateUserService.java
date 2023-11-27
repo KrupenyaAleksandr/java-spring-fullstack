@@ -18,7 +18,6 @@ public class ValidateUserService {
 
     public boolean isUserAlreadyExists(String s){
         Optional<User> user = userRepository.findByUsername(s);
-        System.out.println(user.isEmpty());
         return user.isEmpty();
     }
 }

@@ -5,6 +5,8 @@ import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 
+import java.util.Set;
+
 @Entity // опрееделяем сущность, которая реализует таблицу из БД
 @Table(name = "users")
 @Data // аннотация ломбок, создаёт геттеры, сеттеры, тустринг()
@@ -23,6 +25,11 @@ public class User {
     @Size(min = 6, max = 32, message = "Пароль должен быть длиной от 6 до 32 символов")
     @Column(name = "password")
     private String password;
+
+    //@NotEmpty
+    //@Column(name = "user_role")
+    //@ManyToMany
+    //private Set<Role> user_role;
 
     //@NotEmpty(message = "Введите почту")
     //@Size(min = 8, max = 64, message = "Некорректный email")
