@@ -21,4 +21,7 @@ public class Role {
     @Column(name = "role_name")
     //@OneToMany(mappedBy = "user_role")
     private String role_name;
+
+    @OneToMany(mappedBy = "user_role")
+    private Collection<User> users;
 }

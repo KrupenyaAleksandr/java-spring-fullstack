@@ -30,6 +30,9 @@ public class User {
     //@Column(name = "user_role")
     //@ManyToMany
     //private Set<Role> user_role;
+    @ManyToOne
+    @JoinColumn(name = "user_role", referencedColumnName = "id")
+    private Role user_role;
 
     //@NotEmpty(message = "Введите почту")
     //@Size(min = 8, max = 64, message = "Некорректный email")
