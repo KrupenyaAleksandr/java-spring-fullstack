@@ -6,6 +6,8 @@ import org.springframework.stereotype.Service;
 import spring.weblab4.models.User;
 import spring.weblab4.repositories.UserRepository;
 
+import javax.management.Query;
+
 @Service
 public class RegistrationService {
 
@@ -18,6 +20,7 @@ public class RegistrationService {
 
     @Transactional
     public void register(User user){
+        user.setRole("ROLE_USER");
         userRepository.save(user);
     }
 }

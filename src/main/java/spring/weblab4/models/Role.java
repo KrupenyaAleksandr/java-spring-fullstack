@@ -1,4 +1,4 @@
-package spring.weblab4.models;
+/*package spring.weblab4.models;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
@@ -24,4 +24,8 @@ public class Role {
 
     @OneToMany(mappedBy = "user_role")
     private Collection<User> users;
-}
+
+    Role(String role_name){
+        this.role_name = role_name;
+    }
+}*/

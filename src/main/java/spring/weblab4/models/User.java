@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
+import org.hibernate.annotations.ColumnDefault;
+import org.springframework.boot.context.properties.bind.DefaultValue;
 
 import java.util.Set;
 
@@ -26,13 +28,9 @@ public class User {
     @Column(name = "password")
     private String password;
 
-    //@NotEmpty
-    //@Column(name = "user_role")
-    //@ManyToMany
-    //private Set<Role> user_role;
-    @ManyToOne
-    @JoinColumn(name = "user_role", referencedColumnName = "id")
-    private Role user_role;
+    @Column(name = "role")
+    //@DefaultValue("ROLE_USER")
+    private String role;
 
     //@NotEmpty(message = "Введите почту")
     //@Size(min = 8, max = 64, message = "Некорректный email")
