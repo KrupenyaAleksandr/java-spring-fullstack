@@ -13,23 +13,8 @@
     </br>
 
     <label for="password">Введите пароль: </label>
-    <input type="text" th:field="*{password}" id="password">
+    <input type="password" th:field="*{password}" id="password">
     <div style="color:red" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password Error</div>
-    </br>
-
-    <label for="first_name">Введите имя: </label>
-    <input type="text" th:field="*{first_name}" id="first_name">
-    <div style="color:red" th:if="${#fields.hasErrors('first_name')}" th:errors="*{first_name}">First_name Error</div>
-    </br>
-
-    <label for="first_name">Введите фамилию: </label>
-    <input type="text" th:field="*{last_name}" id="last_name">
-    <div style="color:red" th:if="${#fields.hasErrors('last_name')}" th:errors="*{last_name}">Last_name Error</div>
-    </br>
-
-    <label for="first_name">Введите отчество: </label>
-    <input type="text" th:field="*{middle_name}" id="middle_name">
-    <div style="color:red" th:if="${#fields.hasErrors('middle_name')}" th:errors="*{middle_name}">Middle_name Error</div>
     </br>
 
     <input type="submit" value="Зарегистрироваться"/>

@@ -26,7 +26,7 @@ public class User {
     private String username;
 
     @NotEmpty(message = "Введите пароль")
-    @Size(min = 6, max = 32, message = "Пароль должен быть длиной от 6 до 32 символов")
+    //@Size(min = 6, max = 32, message = "Пароль должен быть длиной от 6 до 32 символов")
     @Column(name = "password")
     private String password;
 

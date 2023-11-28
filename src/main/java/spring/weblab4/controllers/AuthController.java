@@ -38,7 +38,7 @@ public class AuthController {
     //modelattribute нужен для того чтобы создать новый объект и положить в него данные из формы
     @PostMapping("/registration")
     public String performRegistration(@ModelAttribute("user") @Valid User user,
-                                      BindingResult bindingResult){
+                                      BindingResult bindingResult) throws Exception {
 
         userValidator.validate(user, bindingResult);
         if (bindingResult.hasErrors()) {
@@ -50,7 +50,12 @@ public class AuthController {
     }
 
     @PostMapping("/process_login")
-    public void process(){
-        System.out.println();
+    public String performLogin(){
+        return "redirect:/";
+    }
+
+    @PostMapping("/logout")
+    public String performLogout(){
+        return "redirect:/";
     }
 }
