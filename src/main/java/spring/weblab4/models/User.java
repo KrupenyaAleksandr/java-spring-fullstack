@@ -5,12 +5,14 @@ import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.DynamicInsert;
 import org.springframework.boot.context.properties.bind.DefaultValue;
 
 import java.util.Set;
 
 @Entity // опрееделяем сущность, которая реализует таблицу из БД
 @Table(name = "users")
+@DynamicInsert
 @Data // аннотация ломбок, создаёт геттеры, сеттеры, тустринг()
 public class User {
     @Id
@@ -28,8 +30,7 @@ public class User {
     @Column(name = "password")
     private String password;
 
-    @Column(name = "role")
-    //@DefaultValue("ROLE_USER")
+    @Column(name = "role", columnDefinition = "VARCHAR(32) DEFAULT 'ROLE_USER'")
     private String role;
 
     //@NotEmpty(message = "Введите почту")

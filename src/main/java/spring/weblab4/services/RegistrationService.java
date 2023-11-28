@@ -20,7 +20,6 @@ public class RegistrationService {
 
     @Transactional
     public void register(User user){
-        user.setRole("ROLE_USER");
         userRepository.save(user);
     }
 }
