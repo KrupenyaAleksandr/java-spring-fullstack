@@ -13,6 +13,7 @@ import java.util.Set;
 @DynamicInsert
 @Data // аннотация ломбок, создаёт геттеры, сеттеры, тустринг()
 public class User {
+
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)

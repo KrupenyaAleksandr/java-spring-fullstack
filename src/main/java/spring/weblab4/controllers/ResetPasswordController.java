@@ -1,6 +1,11 @@
 package spring.weblab4.controllers;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
+import org.springframework.context.MessageSource;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,7 +16,8 @@ import spring.weblab4.models.PasswordResetToken;
 import spring.weblab4.models.User;
 import spring.weblab4.repositories.PasswordTokenRepository;
 import spring.weblab4.repositories.UserRepository;
-import spring.weblab4.services.SendEmailService;
+import spring.weblab4.services.EmailService;
+import spring.weblab4.util.GenericResponse;
 
 import java.util.Optional;
 import java.util.UUID;
@@ -20,12 +26,17 @@ import java.util.UUID;
 public class ResetPasswordController {
     private final UserRepository userRepository;
     private final PasswordTokenRepository passwordTokenRepository;
-    private final SendEmailService sendEmailService;
+    private final EmailService emailService;
+    private final JavaMailSenderImpl mailSender;
 
-    public ResetPasswordController(UserRepository userRepository, ResetPasswordController resetPasswordController, PasswordTokenRepository passwordTokenRepository, SendEmailService sendEmailService) {
+    @Lazy
+    public ResetPasswordController(UserRepository userRepository, ResetPasswordController resetPasswordController,
+                                   PasswordTokenRepository passwordTokenRepository, EmailService emailService,
+                                   JavaMailSenderImpl mailSender) {
         this.userRepository = userRepository;
         this.passwordTokenRepository = passwordTokenRepository;
-        this.sendEmailService = sendEmailService;
+        this.emailService = emailService;
+        this.mailSender = mailSender;
     }
 
     @GetMapping("/reset-password")
@@ -34,24 +45,23 @@ public class ResetPasswordController {
     }
 
     @PostMapping("/reset-password")
-    public String performResetPassword(@RequestParam("username") String username,
-                                       @ModelAttribute("user") @Valid Optional<User> user,
-                                       BindingResult bindingResult){
+    public String performResetPassword(HttpServletRequest request,
+                                                @RequestParam("username") String username,
+                                                @ModelAttribute("user") @Valid Optional<User> user,
+                                                BindingResult bindingResult){
         user = userRepository.findByUsername(username);
         if (user.isEmpty()) {
             bindingResult.rejectValue("username", "username", "error");
             return "reset-password";
         }
         String token = UUID.randomUUID().toString();
-        createPasswordResetTokenForUser(user, token);
-        //TODO
-        return "redirect:/";
+        createPasswordResetTokenForUser(token, user);
+        mailSender.send(emailService.constructResetTokenEmail(request.getLocale(), token, user.get().getUsername()));
+        return "login";
     }
 
-    @PostMapping("/perform-reset-password")
-    private void createPasswordResetTokenForUser(@Valid Optional<User> user, String token){
-        PasswordResetToken myToken = new PasswordResetToken(token, user);
+    private void createPasswordResetTokenForUser(String token, Optional<User> user){
+        PasswordResetToken myToken = new PasswordResetToken(token, user.get());
         passwordTokenRepository.save(myToken);
-
     }
 }
