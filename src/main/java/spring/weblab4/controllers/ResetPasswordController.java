@@ -7,8 +7,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import spring.weblab4.models.PasswordResetToken;
 import spring.weblab4.models.User;
+import spring.weblab4.repositories.PasswordTokenRepository;
 import spring.weblab4.repositories.UserRepository;
+import spring.weblab4.services.SendEmailService;
 
 import java.util.Optional;
 import java.util.UUID;
@@ -16,9 +19,13 @@ import java.util.UUID;
 @Controller
 public class ResetPasswordController {
     private final UserRepository userRepository;
+    private final PasswordTokenRepository passwordTokenRepository;
+    private final SendEmailService sendEmailService;
 
-    public ResetPasswordController(UserRepository userRepository) {
+    public ResetPasswordController(UserRepository userRepository, ResetPasswordController resetPasswordController, PasswordTokenRepository passwordTokenRepository, SendEmailService sendEmailService) {
         this.userRepository = userRepository;
+        this.passwordTokenRepository = passwordTokenRepository;
+        this.sendEmailService = sendEmailService;
     }
 
     @GetMapping("/reset-password")
@@ -36,6 +43,15 @@ public class ResetPasswordController {
             return "reset-password";
         }
         String token = UUID.randomUUID().toString();
+        createPasswordResetTokenForUser(user, token);
+        //TODO
         return "redirect:/";
+    }
+
+    @PostMapping("/perform-reset-password")
+    private void createPasswordResetTokenForUser(@Valid Optional<User> user, String token){
+        PasswordResetToken myToken = new PasswordResetToken(token, user);
+        passwordTokenRepository.save(myToken);
+
     }
 }
