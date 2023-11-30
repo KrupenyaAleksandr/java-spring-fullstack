@@ -1,10 +1,12 @@
 package spring.weblab4.security;
 
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import spring.weblab4.models.User;
 
 import java.util.Collection;
+import java.util.Collections;
 
 // реализуем интерфейс UserDetails, переопределяем методы
 // чтобы они возвращали информацию о нашем entity юзер, пароль, логин, действительность акка
@@ -21,7 +23,7 @@ public class UserDetailsImpl implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        return Collections.singletonList(new SimpleGrantedAuthority(user.getRole()));
     }
 
     @Override
@@ -32,10 +34,6 @@ public class UserDetailsImpl implements UserDetails {
     @Override
     public String getUsername() {
         return this.user.getUsername();
-    }
-
-    public String getEmail() {
-        return this.user.getEmail();
     }
 
     @Override

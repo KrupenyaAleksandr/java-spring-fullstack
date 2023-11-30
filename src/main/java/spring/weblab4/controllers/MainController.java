@@ -17,6 +17,6 @@ public class MainController {
 
     @GetMapping("/admin")
     public String adminPage(){
-        return "admin_page";
+        return "admin-page";
     }
 }

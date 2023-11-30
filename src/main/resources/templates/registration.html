@@ -7,8 +7,8 @@
 <body>
 
 <form th:method="POST" th:action="@{/registration}" th:object="${user}">
-    <label for="username">Введите логин: </label>
-    <input type="text" th:field="*{username}" id="username">
+    <label for="username">Введите почту: </label>
+    <input type="email" th:field="*{username}" id="username">
     <div style="color:red" th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Username Error</div>
     </br>
 

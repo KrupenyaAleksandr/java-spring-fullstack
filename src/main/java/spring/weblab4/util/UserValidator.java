@@ -28,6 +28,6 @@ public class UserValidator implements Validator {
 
         if (validateUserService.isUserAlreadyExists(user.getUsername()))
             return;
-        errors.rejectValue("username", "", "Пользователь с таким логином уже существует");
+        errors.rejectValue("username", "", "Пользователь с такой почтой уже существует");
     }
 }

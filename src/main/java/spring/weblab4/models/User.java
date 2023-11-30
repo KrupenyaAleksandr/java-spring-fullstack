@@ -4,9 +4,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
-import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
-import org.springframework.boot.context.properties.bind.DefaultValue;
 
 import java.util.Set;
 
@@ -20,8 +18,8 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @NotEmpty(message = "Введите логин")
-    @Size(min = 2, max = 32, message = "Логин должен быть длиной от 2 до 32 символов")
+    @NotEmpty(message = "Введите почту")
+    //@Size(min = 4, max = 128, message = "Некорректный email")
     @Column(name = "username")
     private String username;
 
@@ -32,11 +30,6 @@ public class User {
 
     @Column(name = "role", columnDefinition = "VARCHAR(32) DEFAULT 'ROLE_USER'")
     private String role;
-
-    //@NotEmpty(message = "Введите почту")
-    //@Size(min = 8, max = 64, message = "Некорректный email")
-    @Column(name = "email")
-    private String email;
 
     //@NotEmpty(message = "Введите имя")
     //@Size(min = 2, max = 32, message = "Некорректное имя")

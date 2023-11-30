@@ -4,13 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.config.annotation.authentication.configurers.userdetails.DaoAuthenticationConfigurer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.crypto.scrypt.SCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import spring.weblab4.services.UserDetailsServiceImpl;
 
@@ -22,7 +19,9 @@ public class SpringConfig{
     public static final String[] endpoints_whitelist = {
             "/",
             "/login",
-            "/registration"
+            "/registration",
+            "/reset-password",
+            "/reset-password-error"
     };
 
     @Autowired
@@ -43,7 +42,7 @@ public class SpringConfig{
                                 .anyRequest().authenticated())
                 .formLogin(form -> form
                         .loginPage("/login")
-                        .loginProcessingUrl("/process_login")
+                        .loginProcessingUrl("/process-login")
                         .defaultSuccessUrl("/")
                         .failureUrl("/login?error")
                         .permitAll()
