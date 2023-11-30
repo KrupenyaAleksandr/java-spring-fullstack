@@ -1,6 +1,6 @@
 HELP.md
 target/
-src/main/java/spring/weblab4/config/EmailConfig.java
+EmailConfig.java
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
@@ -19,7 +19,7 @@ src/main/java/spring/weblab4/config/EmailConfig.java
 *.iws
 *.iml
 *.ipr
-/src/main/java/spring/weblab4/config/EmailConfig.java
+EmailConfig.java
 
 ### NetBeans ###
 /nbproject/private/
