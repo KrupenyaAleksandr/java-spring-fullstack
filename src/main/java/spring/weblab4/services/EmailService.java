@@ -11,7 +11,7 @@ public class EmailService{
     public SimpleMailMessage constructResetTokenEmail(Locale locale,
                                                       String token, String userEmail)
     {
-        String url = "localhost:8080/reset-password-process?token=" + token;
+        String url = "localhost:8080/set-password?token=" + token;
         String message = "Reset password";
         return constructEmail("Reset Password", message + " \r\n" + url, userEmail);
     }

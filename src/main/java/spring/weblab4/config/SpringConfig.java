@@ -21,7 +21,9 @@ public class SpringConfig{
             "/login",
             "/registration",
             "/reset-password",
-            "/reset-password-error"
+            "/reset-password-error",
+            "/perform-reset-password",
+            "/set-password"
     };
 
     @Autowired
