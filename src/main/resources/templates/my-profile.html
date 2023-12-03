@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form th:action="@{/update-profile}" th:method="POST" th:object="${user}">
+    <label for="first_name">Имя</label>
+    <input type="text" th:value="${user.first_name}" name="first_name" id="first_name"><br>
+    <label for="middle_name">Отчество</label>
+    <input type="text" th:value="${user.middle_name}" name="middle_name" id="middle_name"><br>
+    <label for="last_name">Фамилия</label>
+    <input type="text" th:value="${user.last_name}" name="last_name" id="last_name"><br>
+    <input type="submit" value="Обновить">
+</form>
+</body>
+</html>

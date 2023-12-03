@@ -4,7 +4,9 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -29,16 +31,18 @@ public class ResetPasswordController {
     private final EmailService emailService;
     private final JavaMailSenderImpl mailSender;
     private final PasswordTokenValidator passwordTokenValidator;
+    private final PasswordEncoder passwordEncoder;
 
     @Lazy
     public ResetPasswordController(UserRepository userRepository, ResetPasswordController resetPasswordController,
                                    PasswordTokenRepository passwordTokenRepository, EmailService emailService,
-                                   JavaMailSenderImpl mailSender, PasswordTokenValidator passwordTokenValidator) {
+                                   JavaMailSenderImpl mailSender, PasswordTokenValidator passwordTokenValidator, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.passwordTokenRepository = passwordTokenRepository;
         this.emailService = emailService;
         this.mailSender = mailSender;
         this.passwordTokenValidator = passwordTokenValidator;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @GetMapping("/reset-password")
@@ -66,7 +70,7 @@ public class ResetPasswordController {
     @GetMapping("/set-password")
     public String setPasswordPage(@RequestParam ("token") String token, RedirectAttributes redirectAttributes,
                                   @ModelAttribute("passwordresettoken") @Valid PasswordResetToken passwordResetToken,
-                                  BindingResult bindingResult){
+                                  BindingResult bindingResult, Model model){
         Optional<PasswordResetToken> myToken = passwordTokenRepository.findPasswordResetTokenByToken(token);
         if (myToken.isEmpty()){
             redirectAttributes.addFlashAttribute("message", "token not found");
@@ -77,13 +81,17 @@ public class ResetPasswordController {
             redirectAttributes.addFlashAttribute("message", "expired token");
             return "redirect:reset-password";
         }
+        model.addAttribute("token", token);
         return "set-password";
     }
 
     @PostMapping("/set-password")
-    public String setPassword(@ModelAttribute("passwordresettoken")@Valid PasswordResetToken passwordResetToken,
-                              @RequestParam("token") String token, BindingResult bindingResult)
-    {
+    public String setPassword(@RequestParam("token") String token, @RequestParam("password") String password) {
+        Optional<PasswordResetToken> passToken = passwordTokenRepository.findPasswordResetTokenByToken(token);
+        User user = passToken.get().getUser();
+        user.setPassword(passwordEncoder.encode(password));
+        userRepository.save(user);
+        passwordTokenRepository.deleteById(passToken.get().getId());
         return "redirect:login";
     }
     private void createPasswordResetTokenForUser(String token, Optional<User> user){
