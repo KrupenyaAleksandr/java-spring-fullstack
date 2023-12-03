@@ -5,6 +5,14 @@
     <title>Title</title>
 </head>
 <body>
-NonAuthrorize
+<div>Неавторизованный пользователь</div><br>
+<div>
+    <form th:method="GET" th:action="@{/registration}">
+        <input type="submit" value="Зарегистрироваться">
+    </form>
+    <form th:method="GET" th:action="@{/login}">
+        <input type="submit" value="Войти">
+    </form>
+</div>
 </body>
 </html>

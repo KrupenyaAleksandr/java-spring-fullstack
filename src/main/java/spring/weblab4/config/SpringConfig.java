@@ -18,7 +18,6 @@ public class SpringConfig{
     private final UserDetailsServiceImpl userDetailsServiceImpl;
     public static final String[] endpoints_whitelist = {
             "/",
-            "/login",
             "/registration",
             "/reset-password",
             "/reset-password-error",
@@ -35,26 +34,26 @@ public class SpringConfig{
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .authenticationProvider(authenticationProvider())
-                .authorizeHttpRequests(request ->
-                        request
-
-                                .requestMatchers("/admin/**")
-                                .hasRole("ADMIN")
-                                .requestMatchers(endpoints_whitelist).permitAll()
-                                .anyRequest().authenticated())
+                .authorizeHttpRequests(request -> request
+                        .requestMatchers("/admin/**")
+                        .hasRole("ADMIN")
+                        .requestMatchers(endpoints_whitelist).permitAll()
+                        .anyRequest().authenticated())
                 .formLogin(form -> form
                         .loginPage("/login")
-                        .loginProcessingUrl("/process-login")
-                        .defaultSuccessUrl("/")
+                        .loginProcessingUrl("/login")
+                        .defaultSuccessUrl("/home")
                         .failureUrl("/login?error")
-                        .permitAll()
-                )
-                .logout(logout ->
-                        logout.logoutUrl("/logout")
-                                .logoutSuccessUrl("/login")
-                                .deleteCookies("JSESSIONID")
-                                .invalidateHttpSession(true)
-                                .permitAll());
+                        .permitAll())
+                .logout(logout -> logout
+                        .logoutUrl("/logout")
+                        .logoutSuccessUrl("/login")
+                        .deleteCookies("JSESSIONID")
+                        .invalidateHttpSession(true)
+                        .permitAll())
+                .sessionManagement(session -> session
+                        .maximumSessions(1)
+                        .maxSessionsPreventsLogin(true));
         return http.build();
     }
 

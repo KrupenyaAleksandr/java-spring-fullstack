@@ -4,19 +4,24 @@
     <title>Please Log In</title>
 </head>
 <body>
-<h1>Please Log In</h1>
-<div th:if="${param.error}">
-    Invalid username and password.</div>
-<div th:if="${param.logout}">
-    You have been logged out.</div>
-<form th:action="@{/process-login}" th:method="POST">
+<h1>Авторизация</h1>
+<div th:if="${param.error}" style="color:red">
+    Неправильное имя пользователя или пароль.</div>
+<div th:if="${param.logout}" style="color:red">
+    Логаут.</div>
+<form th:action="@{/login}" th:method="POST">
     <div>
-        <input type="text" name="username" placeholder="Username"/>
+        <label for="username">Имя пользователя</label><br>
+        <input type="text" name="username" id="username" placeholder="Имя пользователя"/>
     </div>
     <div>
-        <input type="password" name="password" placeholder="Password"/>
+        <label for="password">Пароль</label><br>
+        <input type="password" name="password" id="password" placeholder="Пароль"/>
     </div>
-    <input type="submit" value="Log in" />
+    <input type="submit" value="Войти"/>
+</form>
+<form th:method="GET" th:action="@{/reset-password}">
+    <input type="submit" value="Забыл пароль">
 </form>
 </body>
 </html>

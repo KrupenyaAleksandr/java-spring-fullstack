@@ -7,15 +7,18 @@
 <body>
 
 <form th:method="POST" th:action="@{/registration}" th:object="${user}">
-    <label for="username">Введите почту: </label>
-    <input type="email" th:field="*{username}" id="username">
-    <div style="color:red" th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Username Error</div>
-    </br>
+    <div>
+        <label for="username">Введите почту: </label>
+        <input type="email" th:field="*{username}" id="username">
+        <div style="color:red" th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Username Error</div>
+    </br></div>
 
-    <label for="password">Введите пароль: </label>
-    <input type="password" th:field="*{password}" id="password">
-    <div style="color:red" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password Error</div>
-    </br>
+    <div>
+        <label for="password">Введите пароль: </label>
+        <input type="password" th:field="*{password}" id="password">
+        <div style="color:red" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password Error</div>
+        </br>
+    </div>
 
     <input type="submit" value="Зарегистрироваться"/>
 </form>

@@ -4,9 +4,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 import spring.weblab4.models.PasswordResetToken;
-import spring.weblab4.services.ValidateService;
 
-import java.sql.Timestamp;
 import java.util.Calendar;
 
 @Component

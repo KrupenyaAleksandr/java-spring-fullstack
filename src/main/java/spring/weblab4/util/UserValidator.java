@@ -6,7 +6,6 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 import spring.weblab4.models.User;
 import spring.weblab4.repositories.UserRepository;
-import spring.weblab4.services.ValidateService;
 
 import java.util.Optional;
 

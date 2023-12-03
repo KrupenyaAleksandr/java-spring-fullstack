@@ -5,6 +5,7 @@
     <title>Title</title>
 </head>
 <body>
+Изменение профиля
 <form th:action="@{/update-profile}" th:method="POST" th:object="${user}">
     <label for="first_name">Имя</label>
     <input type="text" th:value="${user.first_name}" name="first_name" id="first_name"><br>
@@ -14,9 +15,13 @@
     <input type="text" th:value="${user.last_name}" name="last_name" id="last_name"><br>
     <input type="submit" value="Обновить">
 </form>
+<div th:if="${message}" th:text="${message}"></div>
 <form th:action="@{/reset-password-from-profile}" th:method="POST">
     <input type="hidden" th:value="${user.username}" name="username">
     <input type="submit" value="Изменить пароль">
 </form>
+<form th:action="@{/logout}" th:method="POST">
+    <input type="submit" value="Выйти" />
+</form><br>
 </body>
 </html>

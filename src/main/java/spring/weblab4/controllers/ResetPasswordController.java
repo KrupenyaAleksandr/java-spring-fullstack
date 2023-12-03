@@ -61,14 +61,14 @@ public class ResetPasswordController {
                                        RedirectAttributes redirectAttributes){
         Optional<User> tmpUser = userRepository.findByUsername(username);
         if (tmpUser.isEmpty()) {
-            redirectAttributes.addFlashAttribute("message", "Failed");
+            redirectAttributes.addFlashAttribute("message", "Пользователь не был найден");
             return "redirect:reset-password";
         }
         User user = tmpUser.get();
         String token = UUID.randomUUID().toString();
         createPasswordResetTokenForUser(token, user);
         mailSender.send(emailService.constructResetTokenEmail(token, user.getUsername()));
-        redirectAttributes.addFlashAttribute("message", "Success");
+        redirectAttributes.addFlashAttribute("message", "Сообщение было отправлено на почту");
         return "redirect:reset-password";
     }
 
@@ -80,7 +80,7 @@ public class ResetPasswordController {
         String token = UUID.randomUUID().toString();
         createPasswordResetTokenForUser(token, user);
         mailSender.send(emailService.constructResetTokenEmail(token, user.getUsername()));
-        //redirectAttributes.addFlashAttribute("message", "Success");
+        redirectAttributes.addFlashAttribute("message", "Сообщение было отправлено на почту");
         return "redirect:my-profile";
     }
 
@@ -90,12 +90,12 @@ public class ResetPasswordController {
                                   BindingResult bindingResult, Model model){
         Optional<PasswordResetToken> myToken = passwordTokenRepository.findPasswordResetTokenByToken(token);
         if (myToken.isEmpty()){
-            redirectAttributes.addFlashAttribute("message", "token not found");
+            redirectAttributes.addFlashAttribute("message", "Неправильный токен");
             return "redirect:reset-password";
         }
         passwordTokenValidator.validate(myToken.get(), bindingResult);
         if (bindingResult.hasErrors()) {
-            redirectAttributes.addFlashAttribute("message", "expired token");
+            redirectAttributes.addFlashAttribute("message", "Токен просрочен");
             return "redirect:reset-password";
         }
         model.addAttribute("token", token);
