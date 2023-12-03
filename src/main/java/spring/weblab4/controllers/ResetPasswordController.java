@@ -1,9 +1,13 @@
 package spring.weblab4.controllers;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.session.SessionInformation;
+import org.springframework.security.core.session.SessionRegistryImpl;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,7 +24,9 @@ import spring.weblab4.repositories.UserRepository;
 import spring.weblab4.services.EmailService;
 import spring.weblab4.util.PasswordTokenValidator;
 
+import java.net.http.HttpRequest;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -50,21 +56,32 @@ public class ResetPasswordController {
         return "reset-password";
     }
 
-    //создаём новый токен
     @PostMapping("/reset-password")
-    public String performResetPassword(HttpServletRequest request,
-                                       @RequestParam("username") String username,
+    public String performResetPassword(@RequestParam("username") String username,
                                        RedirectAttributes redirectAttributes){
-        Optional<User> user = userRepository.findByUsername(username);
-        if (user.isEmpty()) {
+        Optional<User> tmpUser = userRepository.findByUsername(username);
+        if (tmpUser.isEmpty()) {
             redirectAttributes.addFlashAttribute("message", "Failed");
             return "redirect:reset-password";
         }
+        User user = tmpUser.get();
         String token = UUID.randomUUID().toString();
         createPasswordResetTokenForUser(token, user);
-        mailSender.send(emailService.constructResetTokenEmail(request.getLocale(), token, user.get().getUsername()));
+        mailSender.send(emailService.constructResetTokenEmail(token, user.getUsername()));
         redirectAttributes.addFlashAttribute("message", "Success");
         return "redirect:reset-password";
+    }
+
+    @GetMapping("/perform-reset-password-from-profile")
+    public String performResetPasswordFromProfile(@RequestParam("username") String username,
+                                       RedirectAttributes redirectAttributes){
+        System.out.println(username);
+        User user = userRepository.findByUsername(username).get();
+        String token = UUID.randomUUID().toString();
+        createPasswordResetTokenForUser(token, user);
+        mailSender.send(emailService.constructResetTokenEmail(token, user.getUsername()));
+        //redirectAttributes.addFlashAttribute("message", "Success");
+        return "redirect:my-profile";
     }
 
     @GetMapping("/set-password")
@@ -86,16 +103,17 @@ public class ResetPasswordController {
     }
 
     @PostMapping("/set-password")
-    public String setPassword(@RequestParam("token") String token, @RequestParam("password") String password) {
-        Optional<PasswordResetToken> passToken = passwordTokenRepository.findPasswordResetTokenByToken(token);
-        User user = passToken.get().getUser();
+    public String setPassword(@RequestParam("token") String token, @RequestParam("password") String password,
+                              SessionRegistryImpl sessionRegistry) {
+        PasswordResetToken passToken = passwordTokenRepository.findPasswordResetTokenByToken(token).get();
+        User user = passToken.getUser();
         user.setPassword(passwordEncoder.encode(password));
         userRepository.save(user);
-        passwordTokenRepository.deleteById(passToken.get().getId());
+        passwordTokenRepository.deleteById(passToken.getId());
         return "redirect:login";
     }
-    private void createPasswordResetTokenForUser(String token, Optional<User> user){
-        Optional<PasswordResetToken> myToken = passwordTokenRepository.findPasswordResetTokenByUserId(user.get().getId());
+    private void createPasswordResetTokenForUser(String token, User user){
+        Optional<PasswordResetToken> myToken = passwordTokenRepository.findPasswordResetTokenByUserId(user.getId());
         if (!myToken.isEmpty()){
             PasswordResetToken changeExistToken = myToken.get();
            changeExistToken.setToken(token);
@@ -105,7 +123,7 @@ public class ResetPasswordController {
             passwordTokenRepository.save(changeExistToken);
             return;
         }
-        PasswordResetToken newToken = new PasswordResetToken(token, user.get());
+        PasswordResetToken newToken = new PasswordResetToken(token, user);
         passwordTokenRepository.save(newToken);
     }
 }

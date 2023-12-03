@@ -25,9 +25,6 @@ public class RegistrationController {
         return "registration";
     }
 
-    //bindingresult нужен в случае если произойдёт ошибка при проверке user, поместить
-    //ошибку в байндингрезульт и затем обработать в программе
-    //modelattribute нужен для того чтобы создать новый объект и положить в него данные из формы
     @PostMapping("/registration")
     public String performRegistration(@ModelAttribute("user") @Valid User user,
                                       BindingResult bindingResult) throws Exception {

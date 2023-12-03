@@ -6,6 +6,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import spring.weblab4.models.User;
 import spring.weblab4.repositories.UserRepository;
 
@@ -33,5 +35,11 @@ public class ProfileController {
         tmpUser.setLast_name(user.getLast_name().equals("") ? null : user.getLast_name());
         userRepository.save(tmpUser);
         return "redirect:my-profile";
+    }
+
+    @PostMapping("reset-password-from-profile")
+    public String resetPasswordFromProfile(@RequestParam("username") String username, RedirectAttributes redirectAttributes){
+        redirectAttributes.addAttribute("username", username);
+        return "redirect:perform-reset-password-from-profile";
     }
 }

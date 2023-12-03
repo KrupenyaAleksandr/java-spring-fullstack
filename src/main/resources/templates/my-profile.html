@@ -14,5 +14,9 @@
     <input type="text" th:value="${user.last_name}" name="last_name" id="last_name"><br>
     <input type="submit" value="Обновить">
 </form>
+<form th:action="@{/reset-password-from-profile}" th:method="POST">
+    <input type="hidden" th:value="${user.username}" name="username">
+    <input type="submit" value="Изменить пароль">
+</form>
 </body>
 </html>
