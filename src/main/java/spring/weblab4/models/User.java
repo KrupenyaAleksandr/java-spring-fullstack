@@ -2,11 +2,10 @@ package spring.weblab4.models;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.Size;
 import lombok.Data;
 import org.hibernate.annotations.DynamicInsert;
 
-import java.util.Set;
+import java.util.List;
 
 @Entity // опрееделяем сущность, которая реализует таблицу из БД
 @Table(name = "users")
@@ -45,4 +44,10 @@ public class User {
     //@Size(min = 2, max = 32, message = "Некорректная фамилия")
     @Column(name = "last_name")
     private String last_name;
+
+    @OneToOne(mappedBy = "user")
+    private PasswordResetToken passwordResetTokenList;
+
+    @OneToMany
+    private List<Log> logs;
 }

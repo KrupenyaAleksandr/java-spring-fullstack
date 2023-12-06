@@ -25,7 +25,7 @@ public class PasswordResetToken {
     private String token;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @MapsId
+    @MapsId // определяет столбец user_id в таблице форейжн и праймари кей одновременно, референс на юсерс.айди
     private User user;
 
     @Column(name = "expire_date", columnDefinition = "TIMESTAMP DEFAULT LOCALTIMESTAMP + INTERVAL '1 hour'")
