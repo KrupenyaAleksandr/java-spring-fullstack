@@ -1,6 +1,7 @@
 package spring.weblab4.util;
 
 import org.springframework.context.event.EventListener;
+import org.springframework.security.authentication.event.AuthenticationSuccessEvent;
 import org.springframework.stereotype.Component;
 import spring.weblab4.repositories.LogRepository;
 
@@ -17,4 +18,11 @@ public class LogEventListener{
     public void onApplicationEvent(LogEvent logEvent){
         logRepository.save(logEvent.getLog());
     }
+
+    @EventListener(AuthenticationSuccessEvent.class)
+    public void onSuccessLogin(){
+        //TODO
+        //System.out.println(1);
+    }
+
 }
