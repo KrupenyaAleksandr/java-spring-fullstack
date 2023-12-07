@@ -8,20 +8,20 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import spring.weblab4.models.LogAction;
 import spring.weblab4.models.User;
+import spring.weblab4.services.LogService;
 import spring.weblab4.services.RegistrationService;
-import spring.weblab4.util.EventPublisher;
 import spring.weblab4.util.UserValidator;
 
 @Controller
 public class RegistrationController {
     private final UserValidator userValidator;
     private final RegistrationService registrationService;
-    private final EventPublisher eventPublisher;
+    private final LogService logService;
 
-    public RegistrationController(UserValidator userValidator, RegistrationService registrationService, EventPublisher eventPublisher) {
+    public RegistrationController(UserValidator userValidator, RegistrationService registrationService, LogService logService) {
         this.userValidator = userValidator;
         this.registrationService = registrationService;
-        this.eventPublisher = eventPublisher;
+        this.logService = logService;
     }
 
     @GetMapping("/registration")
@@ -38,7 +38,7 @@ public class RegistrationController {
             return "registration";
         }
         registrationService.register(user);
-        eventPublisher.publishLogEvent(user, new LogAction(10));
+        logService.publishLogEvent(user, new LogAction(10));
         return "redirect:/login";
     }
 }
