@@ -2,17 +2,21 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Главная страница</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}">
 </head>
 <body>
-<div>Неавторизованный пользователь</div><br>
 <div>
-    <form th:method="GET" th:action="@{/registration}">
-        <input type="submit" value="Зарегистрироваться">
-    </form>
-    <form th:method="GET" th:action="@{/login}">
-        <input type="submit" value="Войти">
-    </form>
+    <div th:replace="~{fragments/header :: header}">
+    </div>
+    <div>
+        <form th:method="GET" th:action="@{/registration}">
+            <input type="submit" value="Зарегистрироваться">
+        </form>
+        <form th:method="GET" th:action="@{/login}">
+            <input type="submit" value="Войти">
+        </form>
+    </div>
 </div>
 </body>
 </html>

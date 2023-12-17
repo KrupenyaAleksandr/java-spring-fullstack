@@ -40,6 +40,7 @@ public class SpringConfig{
                         .requestMatchers("/admin/**")
                         .hasRole("ADMIN")
                         .requestMatchers(endpoints_whitelist).permitAll()
+                        .requestMatchers("/resources/**","/static/**","/js/**","/css/**").permitAll()
                         .anyRequest().authenticated())
                 .formLogin(form -> form
                         .loginPage("/login")

@@ -10,11 +10,6 @@ public class MainViewController {
         return "index";
     }
 
-    @GetMapping("/home")
-    public String homePage(){
-        return "home";
-    }
-
     @GetMapping("/admin")
     public String adminPage(){
         return "admin-page";

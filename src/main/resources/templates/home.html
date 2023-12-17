@@ -2,15 +2,11 @@
 <html lang="en" xmlns:th="https://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Главная страница</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}">
 </head>
-<body>
-Страница авторизованного пользователя
-<form th:action="@{/my-profile}" th:method="GET">
-    <input type="submit" value="Профиль">
-</form>
-<form th:action="@{/logout}" th:method="POST">
-    <input type="submit" value="Выйти"/>
-</form>
-</body>
+    <body>
+        <div th:replace="~{fragments/header :: header}">
+        </div>
+    </body>
 </html>

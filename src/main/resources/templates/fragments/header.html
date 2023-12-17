@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css" href="stylestmp.css">
+</head>
+    <div class="navbar" th:fragment="header">
+        <div class="container">
+            <div class="navbar navbar-logo">
+                <a href="#">My project</a>
+            </div>
+            <div class="navbar navbar-right">
+                <ul class="navbar navbar-right-ul">
+                    <li th:if="${#authorization.expression('!isAuthenticated()')}">
+                        <a href="/login" th:href="@{#}" onclick="$('#form').submit();">
+                            Sign in
+                        </a>
+                        <form style="visibility: hidden" id="formLogin" th:method="GET" th:action="@{/login}"></form>
+                    </li>
+                    <li th:if="${#authorization.expression('isAuthenticated()')}">
+                        <a href="/logout" th:href="@{#}" onclick="$('#form').submit();">
+                            Logout
+                        </a>
+                        <form style="visibility: hidden" id="formLogout" th:method="GET" th:action="@{/logout}"></form>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</html>
