@@ -1,16 +1,17 @@
-package spring.weblab4.util;
+package spring.weblab4.services;
 
 import org.springframework.context.ApplicationEventPublisher;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import spring.weblab4.models.Log;
 import spring.weblab4.models.LogAction;
 import spring.weblab4.models.User;
+import spring.weblab4.util.LogEvent;
 
-@Component
-public class EventPublisher {
+@Service
+public class LogService {
     private final ApplicationEventPublisher applicationEventPublisher;
 
-    public EventPublisher(ApplicationEventPublisher applicationEventPublisher) {
+    public LogService(ApplicationEventPublisher applicationEventPublisher) {
         this.applicationEventPublisher = applicationEventPublisher;
     }
 

@@ -11,16 +11,15 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import spring.weblab4.models.LogAction;
 import spring.weblab4.models.User;
 import spring.weblab4.repositories.UserRepository;
-import spring.weblab4.util.EventPublisher;
+import spring.weblab4.services.LogService;
 
 @Controller
 public class ProfileController {
     private final UserRepository userRepository;
-    private final EventPublisher eventPublisher;
-
-    public ProfileController(UserRepository userRepository, EventPublisher eventPublisher) {
+    private final LogService logService;
+    public ProfileController(UserRepository userRepository, LogService logService) {
         this.userRepository = userRepository;
-        this.eventPublisher = eventPublisher;
+        this.logService = logService;
     }
 
     @GetMapping("my-profile")
@@ -37,7 +36,7 @@ public class ProfileController {
         tmpUser.setMiddle_name(user.getMiddle_name().equals("") ? null : user.getMiddle_name());
         tmpUser.setLast_name(user.getLast_name().equals("") ? null : user.getLast_name());
         userRepository.save(tmpUser);
-        eventPublisher.publishLogEvent(tmpUser, new LogAction(14));
+        logService.publishLogEvent(tmpUser, new LogAction(14));
         return "redirect:my-profile";
     }
 
