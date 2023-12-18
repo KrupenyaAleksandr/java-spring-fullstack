@@ -60,12 +60,30 @@ a:hover{
     text-decoration: underline;
 }
 
-.navbar.navbar-fixed-top{
-    background-color: blue;
-    font-size: 30px;
+.container{
+    min-height: 60px;
+    background-color: grey;
+    z-index: -1;
 }
 
-.nav.navbar-right{
-    background-color: yellow;
-    font-size: 30px;
+ul.navbar.navbar-right-ul{
+    flex-direction: row;
+    display: flex;
+    z-index: 0;
+}
+
+.navbar.navbar-right-ul input{
+    width: 80px;
+    height: 60px;
+    background-color: inherit;
+    border: 0px;
+    font-size: 18px;
+}
+
+.navbar.navbar-logo{
+    float:left;
+}
+
+.navbar.navbar-right{
+    float:right;
 }

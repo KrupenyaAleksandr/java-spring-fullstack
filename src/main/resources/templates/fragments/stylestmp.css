@@ -61,10 +61,30 @@ a:hover{
 }
 
 .container{
-    min-height: 100px;
+    min-height: 60px;
     background-color: grey;
+    z-index: -1;
 }
 
-ul.navbar.navbar-right-ul li{
-    display: inline;
+ul.navbar.navbar-right-ul{
+    flex-direction: row;
+    display: flex;
+    z-index: 0;
+}
+
+.navbar.navbar-right-ul input{
+    width: 80px;
+    height: 60px;
+    background-color: inherit;
+    border: 0px;
+    font-size: 18px;
+    z-index: 0;
+}
+
+.navbar.navbar-logo{
+    float:left;
+}
+
+.navbar.navbar-right{
+    float:right;
 }

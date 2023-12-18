@@ -13,16 +13,19 @@
             <div class="navbar navbar-right">
                 <ul class="navbar navbar-right-ul">
                     <li th:if="${#authorization.expression('!isAuthenticated()')}">
-                        <a href="/login" th:href="@{#}" onclick="$('#form').submit();">
-                            Sign in
-                        </a>
-                        <form style="visibility: hidden" id="formLogin" th:method="GET" th:action="@{/login}"></form>
+                        <form th:method="GET" th:action="@{/registration}">
+                            <input class="login-button" type="submit" value="Sign up">
+                        </form>
+                    </li>
+                    <li th:if="${#authorization.expression('!isAuthenticated()')}">
+                        <form th:method="GET" th:action="@{/login}">
+                            <input class="login-button" type="submit" value="Sign in">
+                        </form>
                     </li>
                     <li th:if="${#authorization.expression('isAuthenticated()')}">
-                        <a href="/logout" th:href="@{#}" onclick="$('#form').submit();">
-                            Logout
-                        </a>
-                        <form style="visibility: hidden" id="formLogout" th:method="GET" th:action="@{/logout}"></form>
+                        <form th:method="POST" th:action="@{/logout}">
+                            <input class="logout-button" type="submit" value="Logout">
+                        </form>
                     </li>
                 </ul>
             </div>
