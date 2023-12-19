@@ -29,6 +29,7 @@ public class ProfileController {
         return "my-profile";
     }
 
+/*
     @PostMapping("update-profile")
     public String updateProfile(@ModelAttribute("user") User user, Authentication authentication){
         User tmpUser = userRepository.findByUsername(authentication.getName()).get();
@@ -39,6 +40,7 @@ public class ProfileController {
         logService.publishLogEvent(tmpUser, new LogAction(14));
         return "redirect:my-profile";
     }
+*/
 
     @PostMapping("reset-password-from-profile")
     public String resetPasswordFromProfile(@RequestParam("username") String username, RedirectAttributes redirectAttributes){
