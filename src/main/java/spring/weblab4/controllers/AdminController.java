@@ -24,21 +24,14 @@ import java.util.stream.IntStream;
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
-
-    private final MappingDtoService mappingDtoService;
     private final LogService logService;
 
     public AdminController(LogRepository logRepository, MappingDtoService mappingDtoService, LogService logService) {
         this.logService = logService;
-        this.mappingDtoService = mappingDtoService;
     }
 
     @GetMapping("")
-    public String adminPage(Authentication authentication){
-        System.out.println(authentication.getPrincipal());
-        System.out.println(authentication.getDetails());
-        System.out.println(authentication.getCredentials());
-        System.out.println(authentication.getAuthorities());
+    public String adminPage(){
         return "admin-page";
     }
 
