@@ -9,9 +9,4 @@ public class MainViewController {
     public String indexPage(){
         return "index";
     }
-
-    @GetMapping("/admin")
-    public String adminPage(){
-        return "admin-page";
-    }
 }

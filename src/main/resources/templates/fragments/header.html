@@ -3,10 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <link rel="stylesheet" type="text/css" href="stylestmp.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
-    <div class="navbar" th:fragment="header">
-        <div class="container">
+<div class="header" th:fragment="header">
+    <div class="navbar">
+        <div class="container" id="container-navbar">
             <div class="navbar navbar-logo">
                 <form th:if="${#authorization.expression('!isAuthenticated()')}" th:method="GET" th:action="@{/}">
                     <input class="login-button" type="submit" value="Home">
@@ -36,4 +37,5 @@
             </div>
         </div>
     </div>
+</div>
 </html>

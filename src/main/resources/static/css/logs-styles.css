@@ -1,0 +1,19 @@
+#logs-table{
+    margin: auto;
+}
+
+#logs-table table, th, td{
+    border: 0.5px solid black;
+    border-collapse: collapse;
+    text-align: center;
+}
+
+#logs-table th, td{
+    padding: 1.5px;
+}
+
+#logs-pagination{
+    margin: auto;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}

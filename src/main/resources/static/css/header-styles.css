@@ -8,7 +8,7 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
     outline: none;
 }
 html{
-    height: 101%;
+    height: 100%;
 }
 
 body{
@@ -60,12 +60,13 @@ a:hover{
     text-decoration: underline;
 }
 
-.container{
+#container-navbar {
     min-height: 60px;
     background-color: grey;
+    padding: 0px;
 }
 
-.container input{
+#container-navbar input{
     width: 80px;
     height: 60px;
     background-color: inherit;
@@ -75,24 +76,30 @@ a:hover{
     transition: all 0.1s ease-out;
 }
 
-.container input:hover{
+#container-navbar ul.navbar.navbar-right-ul input:hover{
     background-color: rgba(245, 245, 220, 0.25);
 }
 
-.container input:active{
+#container-navbar ul.navbar.navbar-right-ul input:active{
     transform: translate(1px, 1px);
     background-color: rgba(245, 245, 220, 0.45);
 }
 
-ul.navbar.navbar-right-ul{
+#container-navbar ul.navbar.navbar-right-ul{
+    padding: 0;
+    margin: 0;
     flex-direction: row;
     display: flex;
 }
 
-.navbar.navbar-logo{
+#container-navbar .navbar.navbar-logo{
+    margin: 0;
+    padding: 0;
     float:left;
 }
 
-.navbar.navbar-right{
+#container-navbar .navbar.navbar-right{
+    margin: 0;
+    padding: 0;
     float:right;
 }

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <script type="text/javascript" th:src="@{/js/jquery-3.7.1.js}"></script>
+    <script type="text/javascript" th:src="@{/js/bootstrap.js}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+            integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/header-styles.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/logs-styles.css}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"
+          integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+</head>
+<body>
+<div th:replace="~{fragments/header :: header}">
+</div>
+<div class="container">
+    <table id="logs-table">
+        <thead style="text-align: center">
+        <tr>
+            <th>ID Пользователя</th>
+            <th>Username</th>
+            <th>Действие</th>
+            <th>Время</th>
+        </tr>
+        </thead>
+        <tbody style="text-align: center">
+        <tr th:each="logdto: ${logPage}">
+            <td th:text="${logdto.userId}"/>
+            <td th:text="${logdto.username}"/>
+            <td th:text="${logdto.action}"/>
+            <td th:text="${logdto.time.time}"/>
+        </tr>
+        </tbody>
+    </table>
+    <nav aria-label="Pagination" id="logs-pagination" th:if="${logPage.totalPages gt 0}">
+        <ul class="pagination justify-content-center font-weight-bold">
+            <li class="page-item" th:classappend="${logPage.number eq 0} ? 'disabled'">
+                <a class="page-link"
+                   th:href="@{logs?page={id}(id=${logPage.number lt 2 ? 1 : logPage.number})}"
+                   aria-label="Previous" title="Previous Page" data-toggle="tooltip">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+            <li class="page-item" th:classappend="${i eq logPage.number + 1} ? 'active'"
+                th:each="i : ${#numbers.sequence( 1, logPage.totalPages, 1)}">
+                <a class="page-link" th:href="@{logs?page={id}(id=${i})}" th:text="${i}"
+                   th:title="${'Page '+ i}" data-toggle="tooltip"></a>
+            </li>
+            <li class="page-item" th:classappend="${logPage.number + 1 eq logPage.totalPages} ? 'disabled'">
+                <a class="page-link"
+                   th:href="@{logs?page={id}(id=${logPage.number + 2})}"
+                   aria-label="Next" title="Next Page" data-toggle="tooltip">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</div>
+</body>
+</html>

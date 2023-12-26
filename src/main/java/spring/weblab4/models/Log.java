@@ -19,20 +19,20 @@ public class Log {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
-    private User user;
+    private User logUser;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "action_id")
-    private LogAction action;
+    private LogAction logAction;
 
     @Column(name = "action_time", columnDefinition = "TIMESTAMP DEFAULT LOCALTIMESTAMP")
-    private Calendar action_time;
+    private Calendar actionTime;
 
     public Log(User user, LogAction action){
-        this.user = user;
-        this.action = action;
+        this.logUser = user;
+        this.logAction = action;
     }
     public Log() {
-        action_time = Calendar.getInstance();
+        actionTime = Calendar.getInstance();
     }
 }
