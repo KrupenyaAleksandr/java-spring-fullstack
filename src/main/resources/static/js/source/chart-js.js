@@ -15,7 +15,7 @@ $(function(){
         },
         yAxis: {
             min: 0,
-            max: 10000,
+            max: "${maxLogSize}",
             title: {
                 text: 'Age'
             }

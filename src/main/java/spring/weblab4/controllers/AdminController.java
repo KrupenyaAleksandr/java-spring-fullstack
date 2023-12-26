@@ -60,7 +60,6 @@ public class AdminController {
             data = logService.getAllByAction(null, null);
         }
         else {
-            System.out.println(fromDate);
             Calendar fromDateCalendar = Calendar.getInstance();
             Calendar toDateCalendar = Calendar.getInstance();
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -70,6 +69,7 @@ public class AdminController {
         }
         model.addAttribute("keySet", data.keySet());
         model.addAttribute("values", data.values());
+        model.addAttribute("maxLogSize", Collections.max(data.values()) + 10);
         return "chart";
     }
 }
