@@ -47,7 +47,7 @@ public class User {
     //private String last_name;
 
     @OneToOne(mappedBy = "user")
-    private PasswordResetToken passwordResetTokenList;
+    private PasswordResetToken passwordResetToken;
 
     @OneToMany
     private List<Log> logs;

@@ -11,6 +11,7 @@ import java.util.Calendar;
 @Data
 @DynamicInsert
 public class Note {
+
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,30 +19,27 @@ public class Note {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
-    private User user;
-
-    @Column(name = "tags")
-    private String tags;
-
-    @Column(name = "created_time")
-    private Calendar created_time;
-
-    @Column(name = "changed_time")
-    private Calendar changed_time;
-
-    @Column(name = "text")
-    private String text;
+    private User userId;
 
     @Column(name = "title")
     private String title;
 
+    @Column(name = "text")
+    private String text;
+
+    @Column(name = "tag")
+    private String tag;
+
+    @Column(name = "updated_time")
+    private Calendar updatedTime;
+
     public Note(User user){
-        this.user = user;
+        this.userId = user;
     }
 
     public Note(){
-        created_time = Calendar.getInstance();
-        changed_time = Calendar.getInstance();
-        title = "Untitled";
+        title = "Новый заголовок...";
+        text = "Напишите о чем то тут...";
+        updatedTime = Calendar.getInstance();
     }
 }

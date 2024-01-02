@@ -6,7 +6,7 @@ import java.util.Calendar;
 
 @Data
 public class LogDto {
-    Integer userId;
+    int userId;
     String username;
     String action;
     Calendar time;

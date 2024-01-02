@@ -40,22 +40,10 @@ public class LogService {
     public Page<LogDto> findPaginated(Pageable pageable){
         int currentPage = pageable.getPageNumber();
         int pageSize = pageable.getPageSize();
-        int startItem = currentPage * pageSize;
-
-/*        if (logRepository.count() < startItem){
-            logs = Collections.emptyList();
-        }
-        else {
-            int index = (int) Math.min(startItem + pageSize, logRepository.count());
-            logs =
-        }*/
+        //int startItem = currentPage * pageSize;
         Page<Log> logs = logRepository.findAllBy(PageRequest.of(currentPage, pageSize));
-        Page<LogDto> logsPage = logs.map(this::mapToLogDto);
+        Page<LogDto> logsPage = logs.map(mappingDtoService::mapToLogDto);
         return logsPage;
-        //pagesCount = logsPage.getTotalPages();
-/*        return logs.stream()
-                .map(this::mapToLogDto)
-                .collect(Collectors.toList());*/
     }
 
     public Map<String, Integer> getAllByAction(Calendar fromDate, Calendar toDate){
@@ -70,15 +58,5 @@ public class LogService {
             }
         }
         return logsStats;
-    }
-
-    private LogDto mapToLogDto(Log logEntity){
-        LogDto dto = new LogDto();
-        User tmp = logEntity.getLogUser();
-        dto.setUsername(tmp.getUsername());
-        dto.setUserId(tmp.getId());
-        dto.setAction(logEntity.getLogAction().getAction());
-        dto.setTime(logEntity.getActionTime());
-        return dto;
     }
 }

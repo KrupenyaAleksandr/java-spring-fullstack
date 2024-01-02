@@ -4,13 +4,17 @@
     <meta charset="UTF-8">
     <title>Главная страница</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <script type="text/javascript" th:src="@{/js/bootstrap.js}"></script>
-    <link rel="stylesheet" type="text/css" th:href="@{/css/header-styles.css}">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"
-          integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+    <script type="text/javascript" th:src="@{/js/lib/bootstrap.js}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/source/header-styles.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/lib/bootstrap.min.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/source/notes-styles.css}">
 </head>
     <body>
         <div th:replace="~{fragments/header :: header}">
         </div>
+        <div class="notes" id="app">
+        </div>
+        <script th:src="@{/js/source/app.js}" type="module"></script>
     </body>
 </html>
