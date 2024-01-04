@@ -8,8 +8,6 @@ import spring.weblab4.models.Log;
 import spring.weblab4.models.Note;
 import spring.weblab4.models.User;
 
-import java.util.List;
-
 @Service
 public class MappingDtoService {
 
@@ -34,7 +32,7 @@ public class MappingDtoService {
         dto.setNoteId(noteEntity.getId());
         dto.setUserId(noteEntity.getUserId().getId());
         dto.setTitle(noteEntity.getTitle());
-        dto.setText(noteEntity.getText());
+        dto.setBody(noteEntity.getBody());
         dto.setTag(noteEntity.getTag());
         dto.setUpdatedTime(noteEntity.getUpdatedTime());
         return dto;
@@ -45,7 +43,7 @@ public class MappingDtoService {
         if (noteDto.getNoteId() != 0)
             note.setId(noteDto.getNoteId());
         note.setTitle(noteDto.getTitle());
-        note.setText(noteDto.getText());
+        note.setBody(noteDto.getBody());
         note.setTag(noteDto.getTag());
         return note;
     }

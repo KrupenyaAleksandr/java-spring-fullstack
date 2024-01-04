@@ -24,8 +24,8 @@ public class Note {
     @Column(name = "title")
     private String title;
 
-    @Column(name = "text")
-    private String text;
+    @Column(name = "body")
+    private String body;
 
     @Column(name = "tag")
     private String tag;
@@ -39,7 +39,7 @@ public class Note {
 
     public Note(){
         title = "Новый заголовок...";
-        text = "Напишите о чем то тут...";
+        body = "Напишите о чем то тут...";
         updatedTime = Calendar.getInstance();
     }
 }

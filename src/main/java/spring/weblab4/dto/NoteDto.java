@@ -9,7 +9,7 @@ public class NoteDto {
     int noteId;
     int userId;
     String title;
-    String text;
+    String body;
     String tag;
     Calendar updatedTime;
 }

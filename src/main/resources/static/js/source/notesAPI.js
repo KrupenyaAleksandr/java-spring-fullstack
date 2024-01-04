@@ -1,10 +1,22 @@
 export default class notesAPI {
-    static async getAllNotes() {
+    static async getAllNotes(selectedTags) {
         try {
-            const notes = await axios.get('/rest/notes/get-all-notes');
-            console.log(notes);
-            return notes.sort((a, b) => {
-                return new Date(a.updated) > new Date(b.updated) ? -1 : 1;
+            let notes = [];
+            if (selectedTags.length == 0){
+                notes = await axios.get('/rest/notes/get-all-notes');
+            }
+            else {
+                console.log("tags sended");
+                console.log(selectedTags);
+                notes = await axios.get('/rest/notes/get-all-notes', {
+                    params: { "selectedTags": selectedTags },
+                    paramsSerializer: {
+                        indexes: null
+                    }
+                })
+            }
+            return notes.data.sort((a, b) => {
+                return new Date(a.updatedTime) > new Date(b.updatedTime) ? -1 : 1;
             });
         } catch (error) {
             console.error(error);
@@ -21,7 +33,28 @@ export default class notesAPI {
           });
     }
 
-    static deleteNote(noteId){
+    static async deleteNote(noteIdToDelete){
+        await axios({
+            method: 'POST',
+            url: '/rest/notes/delete-note',
+            data: {
+                noteId : noteIdToDelete
+            }
+        })
+        .then(function (response) {
+            console.log(response);
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+    }
 
+    static async collectAvailableTags(){
+        try {
+            const tags = await axios.get('/rest/notes/get-all-available-tags');
+            return tags.data;
+        } catch (error) {
+            console.error(error);
+        }
     }
 }
