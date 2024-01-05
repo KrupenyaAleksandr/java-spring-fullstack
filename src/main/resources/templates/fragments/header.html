@@ -10,27 +10,27 @@
         <div class="container" id="container-navbar">
             <div class="navbar navbar-logo">
                 <form th:if="${#authorization.expression('!isAuthenticated()')}" th:method="GET" th:action="@{/}">
-                    <input class="login-button" type="submit" value="Home">
+                    <input class="home-button" type="submit" value="Главная">
                 </form>
                 <form th:if="${#authorization.expression('isAuthenticated()')}" th:method="GET" th:action="@{/home}">
-                    <input class="login-button" type="submit" value="Home">
+                    <input class="home-button" type="submit" value="Главная">
                 </form>
             </div>
             <div class="navbar navbar-right">
                 <ul class="navbar navbar-right-ul">
-                    <li th:if="${#authorization.expression('!isAuthenticated()')}">
+                    <li class="registration-button-li" th:if="${#authorization.expression('!isAuthenticated()')}">
                         <form th:method="GET" th:action="@{/registration}">
-                            <input class="login-button" type="submit" value="Sign up">
+                            <input class="registration-button" type="submit" value="Регистрация">
                         </form>
                     </li>
-                    <li th:if="${#authorization.expression('!isAuthenticated()')}">
+                    <li class="login-button-li" th:if="${#authorization.expression('!isAuthenticated()')}">
                         <form th:method="GET" th:action="@{/login}">
-                            <input class="login-button" type="submit" value="Sign in">
+                            <input class="login-button" type="submit" value="Войти">
                         </form>
                     </li>
-                    <li th:if="${#authorization.expression('isAuthenticated()')}">
+                    <li class="logout-button-li" th:if="${#authorization.expression('isAuthenticated()')}">
                         <form th:method="POST" th:action="@{/logout}">
-                            <input class="logout-button" type="submit" value="Logout">
+                            <input class="logout-button" type="submit" value="Выйти">
                         </form>
                     </li>
                 </ul>

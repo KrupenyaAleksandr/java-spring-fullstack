@@ -48,23 +48,35 @@ export default class App {
             },
             onNoteAdd: async () => {
                 const newNote = {
-                    title: "New Note",
-                    body: "Take note..."
+                    title: "Новый заголовок...",
+                    body: "Новая записка..."
                 };
 
                 await notesAPI.saveNote(newNote);
                 await this._refreshNotes();
             },
             onNoteEdit: async (title, body, tag) => {
-                await notesAPI.saveNote({
-                    noteId: this.activeNote.noteId,
-                    tag,
-                    title,
-                    body,
-                    tag
-                });
+                if (tag == "") {
+                    console.log(tag);
+                    await notesAPI.saveNote({
+                        noteId: this.activeNote.noteId,
+                        title,
+                        body
+                    });
+                }
+                else {
+                    console.log(tag);
+                    await notesAPI.saveNote({
+                        noteId: this.activeNote.noteId,
+                        title,
+                        body,
+                        tag
+                    });
+                }
 
                 await this._refreshNotes();
+                const tags = await notesAPI.collectAvailableTags(); //not tested
+                this.view.addTagsToList(tags);
             },
             onNoteDelete: async noteId => {
                 await notesAPI.deleteNote(noteId);

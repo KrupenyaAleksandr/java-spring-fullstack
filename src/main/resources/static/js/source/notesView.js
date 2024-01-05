@@ -8,13 +8,13 @@ export default class notesView {
         this.onTagsChanged = onTagsChanged;
         this.root.innerHTML = `
             <div class="notes__sidebar">
-                <button class="notes__add" type="button">Add Note</button>
+                <button class="notes__add" type="button">Новая заметка</button>
                 <div class="notes__list"></div>
             </div>
             <div class="notes__preview">
-                <input class="notes__tag" type="text" placeholder="Tag here">
-                <input class="notes__title" type="text" placeholder="New Note...">
-                <textarea class="notes__body">Take Note...</textarea>
+                <input class="notes__tag" type="text" placeholder="Метка">
+                <input class="notes__title" type="text" placeholder="Новый заголовок...">
+                <textarea class="notes__body">Новая записка...</textarea>
             </div>
         `;
 

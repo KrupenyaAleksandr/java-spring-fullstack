@@ -39,7 +39,7 @@ public class Note {
 
     public Note(){
         title = "Новый заголовок...";
-        body = "Напишите о чем то тут...";
+        body = "Новая записка...";
         updatedTime = Calendar.getInstance();
     }
 }
