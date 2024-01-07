@@ -1,78 +1,77 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/html">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+    <head>
+        <meta charset="UTF-8">
+        <title>Регистрация</title>
+        <link rel="stylesheet" type="text/css" th:href="@{/css/source/registration-styles.css}">
+        <link rel="stylesheet" type="text/css" th:href="@{/css/lib/bootstrap.min.css}">
+        <link rel="icon" type="image/x-icon" th:href="@{/img/green-logo.ico}"/>
+    </head>
+    <body class="text-center">
+        <main class="form-registration">
+            <form style="margin-top: -80px" th:method="POST" th:action="@{/registration}" th:object="${user}">
+                <img class="registration-image w-100" alt="Registration logo" th:src="@{/img/open-book.png}">
+                <h1 class="h3 mb-4 fw-normal">Регистрация</h1>
 
-<form th:method="POST" th:action="@{/registration}" th:object="${user}">
-    <div class="form-group" th:classappend="${#fields.hasErrors('username')}? 'has-error':''">
-        <div class="input-group">
-            <span class="input-group-addon">@</span>
-            <input id="username"
-                type="email" 
-                class="form-control"
-                placeholder="Email"
-                th:field="*{username}"/>
-        </div>
-        <p class="error-message"
-            th:each="error: ${#fields.errors('username')}"
-            th:text="${error}">Username error</p>
-    </br></div>
+                <div class="form-floating mb-3">
+                    <input id="username"
+                        type="email" 
+                        class="form-control"
+                        placeholder="Электронная почта"
+                        th:field="*{username}"/>
+                    <label for="username">Электронная почта</label>
+                </div>
+    
+                <div class="form-floating mb-4">
+                    <input id="confirmUsername"
+                        type="email" 
+                        class="form-control"
+                        placeholder="Подтвердите почту"
+                        th:attr="name='confirmUsername'"/>
+                    <label for="confirmUsername">Подтвердите почту</label>
+                </div>
+    
+                <div class="form-text mb-2" id="passwordHelpBlock">
+                    Ваш пароль должен содержать от 4-20 символов и не включать в себя пробелы.
+                </div>
 
-    <div class="form-group">
-        <div class="input-group">
-            <span class="input-group-addon">@</span>
-            <input id="confirmUsername"
-                type="email" 
-                class="form-control"
-                placeholder="Confirm Email"
-                th:attr="name='confirmUsername'"/>
-        </div>
-        <p class="error-message"
-            th:if="${confirmUsernameError}" 
-            th:text="${confirmUsernameError}">Confirm username error</p>
-    </br></div>
+                <div class="form-floating mb-3">
+                    <input id="password"
+                            class="form-control"
+                            placeholder="Пароль"
+                            type="password"
+                            th:field="*{password}"/>
+                    <label for="password">Пароль</label>
+                </div>
+    
+                <div class="form-floating mb-4">
+                    <input id="confirmPassword"
+                            class="form-control"
+                            type="password"
+                            placeholder="Confirm password"
+                            th:attr="name='confirmPassword'"/>
+                    <label for="confirmPassword">Подтвердите пароль</label>
+                </div>
+    
+                <button class="w-100 btn btn-lg btn-primary" type="submit" value="Зарегистрироваться">Зарегистрироваться</button>
 
-    <div class="form-group"
-            th:classappend="${#fields.hasErrors('password')}? 'has-error':''">
-        <div class="input-group">
-            <span class="input-group-addon">
-                <i class="glyphicon glyphicon-lock">pic</i>
-            </span>
-            <input id="password"
-                    class="form-control"
-                    placeholder="Password"
-                    type="password"
-                    th:field="*{password}"/>
-        </div>
-        <ul class="text-left"
-            th:each="error: ${#fields.errors('password')}">
-            <li th:each="message : ${error.split(',')}">
-                <p class="error-message"
-                    th:text="${message}"></p>
-            </li>
-        </ul>
-    </div>
+                <p class="text-danger pt-2"
+                th:if="${usernameError}"
+                th:text="${usernameError}">Username error</p>
 
-    <div class="form-group">
-        <div class="input-group">
-            <span class="input-group-addon">
-                <i class="glyphicon glyphicon-lock">pic</i>
-            </span>
-            <input id="confirmPassword"
-                    class="form-control"
-                    type="password"
-                    placeholder="Confirm password"
-                    th:attr="name='confirmPassword'"/>
-        </div>
-        <p class="error-message"
-            th:if="${confirmPasswordError}" 
-            th:text="${confirmPasswordError}">Confirm password error</p>
-    </div>
+                <p class="text-danger pt-2"
+                th:if="${passwordError}" 
+                th:text="${passwordError}">Password error</p>
 
-    <input type="submit" value="Зарегистрироваться"/>
-</form>
-</body>
+                <p class="text-danger pt-2"
+                th:if="${confirmUsernameError}" 
+                th:text="${confirmUsernameError}">Confirm username error</p>
+
+                <p class="text-danger pt-2"
+                th:if="${confirmPasswordError}" 
+                th:text="${confirmPasswordError}">Confirm password error</p>
+
+            </form>
+        </main>
+    </body>
 </html>

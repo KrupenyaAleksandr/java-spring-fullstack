@@ -25,8 +25,8 @@ public class ProfileController {
     @GetMapping("my-profile")
     public String myProfilePage(@ModelAttribute("user") User user, Authentication authentication,
                                 Model model){
-        model.addAttribute(userRepository.findByUsername(authentication.getName()).get());
-        return "my-profile";
+        //model.addAttribute(userRepository.findByUsername(authentication.getName()).get());
+        return "redirect:home";
     }
 
 /*
@@ -42,9 +42,9 @@ public class ProfileController {
     }
 */
 
-    @PostMapping("reset-password-from-profile")
+/*    @PostMapping("reset-password-from-profile")
     public String resetPasswordFromProfile(@RequestParam("username") String username, RedirectAttributes redirectAttributes){
         redirectAttributes.addAttribute("username", username);
         return "redirect:perform-reset-password-from-profile";
-    }
+    }*/
 }

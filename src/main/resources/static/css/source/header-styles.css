@@ -94,6 +94,10 @@ a:hover{
     background-color: #009578 !important;
 }
 
+.login-button-li:hover{
+    background: #ffffffe0;
+}
+
 .login-button-li input:active {
     color: #ffffff !important;
 }
@@ -103,6 +107,10 @@ a:hover{
     background-color: #ffffff !important;
 }
 
+.registration-button-li:hover{
+    background: #00af8c;
+}
+
 .registration-button-li input:active {
     color: #009578 !important;
 }
@@ -110,6 +118,10 @@ a:hover{
 .logout-button-li:active {
     transform: translate(1px, 1px);
     background-color: #ffffff !important;
+}
+
+.logout-button-li:hover{
+    background: #00af8c;
 }
 
 .logout-button-li input:active {

@@ -1,15 +1,8 @@
 package spring.weblab4.controllers;
 
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.session.SessionInformation;
-import org.springframework.security.core.session.SessionRegistry;
-import org.springframework.security.core.session.SessionRegistryImpl;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,11 +18,9 @@ import spring.weblab4.repositories.PasswordTokenRepository;
 import spring.weblab4.repositories.UserRepository;
 import spring.weblab4.services.EmailService;
 import spring.weblab4.util.PasswordTokenValidator;
+import spring.weblab4.util.UserValidator;
 
-import javax.mail.Session;
-import java.net.http.HttpRequest;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Controller
 public class ResetPasswordController {
@@ -39,17 +30,19 @@ public class ResetPasswordController {
     private final JavaMailSenderImpl mailSender;
     private final PasswordTokenValidator passwordTokenValidator;
     private final PasswordEncoder passwordEncoder;
+    private final UserValidator userValidator;
 
     @Lazy
     public ResetPasswordController(UserRepository userRepository, ResetPasswordController resetPasswordController,
                                    PasswordTokenRepository passwordTokenRepository, EmailService emailService,
-                                   JavaMailSenderImpl mailSender, PasswordTokenValidator passwordTokenValidator, PasswordEncoder passwordEncoder) {
+                                   JavaMailSenderImpl mailSender, PasswordTokenValidator passwordTokenValidator, PasswordEncoder passwordEncoder, UserValidator userValidator) {
         this.userRepository = userRepository;
         this.passwordTokenRepository = passwordTokenRepository;
         this.emailService = emailService;
         this.mailSender = mailSender;
         this.passwordTokenValidator = passwordTokenValidator;
         this.passwordEncoder = passwordEncoder;
+        this.userValidator = userValidator;
     }
 
     @GetMapping("/reset-password")
@@ -73,7 +66,7 @@ public class ResetPasswordController {
         return "redirect:reset-password";
     }
 
-    @GetMapping("/perform-reset-password-from-profile")
+/*    @GetMapping("/perform-reset-password-from-profile")
     public String performResetPasswordFromProfile(@RequestParam("username") String username,
                                        RedirectAttributes redirectAttributes){
         System.out.println(username);
@@ -83,7 +76,7 @@ public class ResetPasswordController {
         mailSender.send(emailService.constructResetTokenEmail(token, user.getUsername()));
         redirectAttributes.addFlashAttribute("message", "Сообщение было отправлено на почту");
         return "redirect:my-profile";
-    }
+    }*/
 
     @GetMapping("/set-password")
     public String setPasswordPage(@RequestParam ("token") String token, RedirectAttributes redirectAttributes,
@@ -91,12 +84,12 @@ public class ResetPasswordController {
                                   BindingResult bindingResult, Model model){
         Optional<PasswordResetToken> myToken = passwordTokenRepository.findPasswordResetTokenByToken(token);
         if (myToken.isEmpty()){
-            redirectAttributes.addFlashAttribute("message", "Неправильный токен");
+            redirectAttributes.addFlashAttribute("message", "Неправильный токен.");
             return "redirect:reset-password";
         }
         passwordTokenValidator.validate(myToken.get(), bindingResult);
         if (bindingResult.hasErrors()) {
-            redirectAttributes.addFlashAttribute("message", "Токен просрочен");
+            redirectAttributes.addFlashAttribute("message", "Токен просрочен.");
             return "redirect:reset-password";
         }
         model.addAttribute("token", token);
@@ -105,7 +98,11 @@ public class ResetPasswordController {
 
     @PostMapping("/set-password")
     public String setPassword(@RequestParam("token") String token, @RequestParam("password") String password,
-                              SessionRegistryImpl sessionRegistry) {
+                              Model model, RedirectAttributes redirectAttributes) {
+        if (userValidator.checkPassword(password)){
+            redirectAttributes.addFlashAttribute("message", "Пароль не соответствует условиям.");
+            return "redirect:set-password" + "?token=" + token;
+        }
         PasswordResetToken passToken = passwordTokenRepository.findPasswordResetTokenByToken(token).get();
         User user = passToken.getUser();
         user.setPassword(passwordEncoder.encode(password));

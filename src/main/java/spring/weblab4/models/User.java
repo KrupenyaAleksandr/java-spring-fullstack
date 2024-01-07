@@ -4,14 +4,13 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Data;
 import org.hibernate.annotations.DynamicInsert;
-import spring.weblab4.util.ValidPassword;
 
 import java.util.List;
 
-@Entity // опрееделяем сущность, которая реализует таблицу из БД
+@Entity
 @Table(name = "users")
 @DynamicInsert
-@Data // аннотация ломбок, создаёт геттеры, сеттеры, тустринг()
+@Data
 public class User {
 
     @Id
@@ -25,26 +24,11 @@ public class User {
     private String username;
 
     @NotEmpty(message = "Введите пароль")
-    @ValidPassword
     @Column(name = "password")
     private String password;
 
     @Column(name = "role", columnDefinition = "VARCHAR(32) DEFAULT 'ROLE_USER'")
     private String role;
-
-    //@NotEmpty(message = "Введите имя")
-    //@Size(min = 2, max = 32, message = "Некорректное имя")
-    //@Column(name = "first_name")
-    //private String first_name;
-
-    //@Size(min = 2, max = 32, message = "Некорректное отчество")
-    //@Column(name = "middle_name")
-    //private String middle_name;
-
-    //@NotEmpty(message = "Введите фамилию")
-    //@Size(min = 2, max = 32, message = "Некорректная фамилия")
-    //@Column(name = "last_name")
-    //private String last_name;
 
     @OneToOne(mappedBy = "user")
     private PasswordResetToken passwordResetToken;

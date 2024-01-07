@@ -1,27 +1,34 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
 <head>
-    <title>Please Log In</title>
+    <title>Авторизация</title>
+    <script type="text/javascript" th:src="@{/js/lib/bootstrap.js}"></script>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/source/login-styles.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/lib/bootstrap.min.css}">
+    <link rel="icon" type="image/x-icon" th:href="@{/img/green-logo.ico}"/>
 </head>
-<body>
-<h1>Авторизация</h1>
-<div th:if="${param.error}" style="color:red">
-    Неправильное имя пользователя или пароль.</div>
-<div th:if="${param.logout}" style="color:red">
-    Логаут.</div>
-<form th:action="@{/login}" th:method="POST">
-    <div>
-        <label for="username">Имя пользователя</label><br>
-        <input type="text" name="username" id="username" placeholder="Имя пользователя"/>
-    </div>
-    <div>
-        <label for="password">Пароль</label><br>
-        <input type="password" name="password" id="password" placeholder="Пароль"/>
-    </div>
-    <input type="submit" value="Войти"/>
-</form>
-<form th:method="GET" th:action="@{/reset-password}">
-    <input type="submit" value="Забыл пароль">
-</form>
-</body>
+    <body class="text-center">
+        <main class="form-signin">
+            <form style="margin-top: -96px;" th:method="POST" th:action="@{/login}">
+                <img class="login-image w-100" alt="Login logo" th:src="@{/img/open-book.png}">
+                <h1 class="h3 mb-4 fw-normal">Авторизация</h1>
+                <div class="form-floating mb-3">
+                    <input type="email" class="form-control" name="username" id="username" placeholder="Электронная почта"/>
+                    <label for="username">Электронная почта</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <input type="password" class="form-control" name="password" id="password" placeholder="Пароль"/>
+                    <label for="password">Пароль</label>
+                </div>
+                <div class="text-danger my-3" th:if="${param.error}">
+                    Неправильное имя пользователя или пароль.</div>
+                <div class="text-danger my-3"  th:if="${param.logout}">
+                    Логаут.</div>
+                <button class="w-100 btn btn-lg btn-primary mb-3" type="submit" value="Войти">Войти</button>
+            </form>
+            <form class="form-forget-password" th:method="GET" th:action="@{/reset-password}">
+                <input type="submit" value="Забыли пароль?">
+            </form>
+        </main>
+    </body>
 </html>

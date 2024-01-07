@@ -41,21 +41,24 @@ public class RegistrationController {
                                       @RequestParam("confirmPassword") String confirmPassword,
                                       RedirectAttributes redirectAttributes,
                                       BindingResult bindingResult) throws Exception {
-        System.out.println(confirmUsername);
-        userValidator.validate(user, bindingResult);
-        if (bindingResult.hasErrors()) {
-            return "redirect:registration";
-        }
-
         if (!user.getUsername().equals(confirmUsername)){
-            bindingResult.reject("", "Email doesn't match");
-            redirectAttributes.addFlashAttribute("confirmUsernameError", "Email doesn't match");
+            redirectAttributes.addFlashAttribute("confirmUsernameError", "Электронная почта не совпадает.");
             return "redirect:registration";
         }
 
         if (!user.getPassword().equals(confirmPassword)){
-            bindingResult.reject("", "Password doesn't match");
-            redirectAttributes.addFlashAttribute("confirmPasswordError", "Password doesn't match");
+            redirectAttributes.addFlashAttribute("confirmPasswordError", "Пароль не совпадает.");
+            return "redirect:registration";
+        }
+
+        userValidator.validate(user, bindingResult);
+        if (bindingResult.hasErrors()) {
+            if (bindingResult.hasFieldErrors("username")){
+                redirectAttributes.addFlashAttribute("usernameError", "Пользователь уже существует.");
+            }
+            if (bindingResult.hasFieldErrors("password")){
+                redirectAttributes.addFlashAttribute("passwordError", "Пароль не соответствует условиям.");
+            }
             return "redirect:registration";
         }
 

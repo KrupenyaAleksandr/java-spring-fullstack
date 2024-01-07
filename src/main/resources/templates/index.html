@@ -1,17 +1,57 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Главная страница</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <script type="text/javascript" th:src="@{/js/lib/bootstrap.js}"></script>
-    <link rel="stylesheet" type="text/css" th:href="@{/css/source/header-styles.css}">
-    <link rel="stylesheet" type="text/css" th:href="@{/css/lib/bootstrap.min.css}">
-</head>
-<body>
-<div>
-    <div th:replace="~{fragments/header :: header}">
-    </div>
-</div>
-</body>
+    <head>
+        <meta charset="UTF-8">
+        <title>Главная страница</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <script type="text/javascript" th:src="@{/js/lib/bootstrap.js}"></script>
+        <link rel="stylesheet" type="text/css" th:href="@{/css/source/header-styles.css}">
+        <link rel="stylesheet" type="text/css" th:href="@{/css/source/index-styles.css}">
+        <link rel="stylesheet" type="text/css" th:href="@{/css/lib/bootstrap.min.css}">
+        <link rel="icon" type="image/x-icon" th:href="@{/img/green-logo.ico}"/>
+    </head>
+    <body>
+        <div class="container">
+            <div th:replace="~{fragments/header :: header}">
+            </div>
+            <section>
+                <div class="container welcome-section">
+                    <h1>Планируйте, записывайте, выполняйте:<br>
+                        ваши идеи и задачи всегда под рукой</h1>
+                    <p>Объединив свои записи и планы, 
+                        вы сможете легко ими управлять <br> 
+                        и ни о чем не забудете.</p>
+                    <div class="authorization">
+                        <div class="registration-button-index">
+                            <form th:method="GET" th:action="@{/registration}">
+                                <input class="registration-button" type="submit" value="Зарегистрироваться">
+                            </form>
+                        </div>
+                        <div class="login-button-index">
+                            <form th:method="GET" th:action="@{/login}">
+                                <input class="login-button" type="submit" value="Уже есть аккаунт? Войдите">
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section>
+                <div class="container content-section">
+                    <div class="preview-image-index">
+                        <img alt="Preview image" th:src="@{/img/preview-image.png}" />
+                    </div>
+                    <div class="text-content-index">
+                        <h3>Простое создание заметок</h3>
+                        <p>Возможность быстро и легко создавать заметки
+                            с заголовком и текстом. Удобный интерфейс для записи и сохранения идей.</p>
+                        <h3>Легкий доступ и редактирование</h3>
+                        <p>Вы легко сможете редактировать заметки и добавлять
+                            новые где угодно и когда угодно.</p>
+                        <h3>Фильтрация</h3>
+                        <p>При помощи меток и фильтров вы быстро сможете найти нужную информацию.</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </body>
 </html>

@@ -8,6 +8,8 @@ import spring.weblab4.models.User;
 import spring.weblab4.repositories.UserRepository;
 
 import java.util.Optional;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Component
 public class UserValidator implements Validator {
@@ -28,13 +30,29 @@ public class UserValidator implements Validator {
     public void validate(Object target, Errors errors) {
         User user = (User) target;
 
-        if (isUserAlreadyExists(user.getUsername()))
-            return;
-        errors.rejectValue("username", "", "Пользователь с такой почтой уже существует");
+        if (isUserAlreadyExists(user.getUsername())){
+            errors.rejectValue("username", "", "Пользователь уже существует.");
+        }
+
+        if (checkPassword(user.getPassword())){
+            errors.rejectValue("password", "", "Пароль не соответствует условиям.");
+        }
     }
 
-    private boolean isUserAlreadyExists(String s){
-        Optional<User> user = userRepository.findByUsername(s);
-        return user.isEmpty();
+    private boolean isUserAlreadyExists(String username){
+        Optional<User> user = userRepository.findByUsername(username);
+        return !user.isEmpty();
+    }
+
+    public boolean checkPassword(String password){
+        String regex = "^(?=\\S+$).{4,20}$";
+        Pattern pattern = Pattern.compile(regex);
+        if (password == null) {
+            return false;
+        }
+
+        Matcher matcher = pattern.matcher(password);
+
+        return !matcher.matches();
     }
 }

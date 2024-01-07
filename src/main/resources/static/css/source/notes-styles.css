@@ -72,7 +72,8 @@
 .notes__preview {
     display: flex;
     flex-direction: column;
-    padding: 0em 2em;
+    padding-left: 2em;
+    padding-right: 4em;
     flex-grow: 1;
 }
 
