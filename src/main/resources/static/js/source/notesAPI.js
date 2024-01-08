@@ -6,8 +6,6 @@ export default class notesAPI {
                 notes = await axios.get('/rest/notes/get-all-notes');
             }
             else {
-                console.log("tags sended");
-                console.log(selectedTags);
                 notes = await axios.get('/rest/notes/get-all-notes', {
                     params: { "selectedTags": selectedTags },
                     paramsSerializer: {

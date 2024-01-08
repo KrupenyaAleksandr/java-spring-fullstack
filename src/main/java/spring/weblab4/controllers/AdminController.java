@@ -38,7 +38,7 @@ public class AdminController {
     @GetMapping("/logs")
     public String logsPage(Model model,
                            @RequestParam(value = "page", defaultValue = "1") int currentPage,
-                           @RequestParam(value = "size", defaultValue = "30") int pageSize){
+                           @RequestParam(value = "size", defaultValue = "20") int pageSize){
         Page<LogDto> logPage = logService.findPaginated(PageRequest.of(currentPage - 1, pageSize));
         model.addAttribute("logPage", logPage);
         int totalPages = logPage.getTotalPages();
